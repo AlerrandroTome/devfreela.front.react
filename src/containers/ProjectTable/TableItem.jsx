@@ -1,24 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid, IconButton, Typography } from '@mui/material';
 import { ReactComponent as PencilIcon } from '../../assets/images/icon-pencil.svg';
 import { ReactComponent as TrashIcon } from '../../assets/images/icon-trash.svg';
-import './styles.css';
+import { TableLineStyled, ValueColumnStyled, ActionColumnStyled } from './styles';
+import { formatCurrency } from '../../commons/utils/money';
 
 function TableItem({name, description, value}){
     return (
-        <div className='row table-line'>
-            <div className='col-7 description-column'>
-                <h3>{name}</h3>
-                <p>{description}</p>
-            </div>
-            <div className='col-3 value-column'>
-                <span>{value}</span>
-            </div>
-            <div className='col-2 action-column'>
-                <PencilIcon onClick={() => console.log("Cliquei para editar!")} />
-                <TrashIcon onClick={() => console.log("Cliquei para remover!")} />
-            </div>
-        </div>
+        <TableLineStyled container>
+            <Grid item xs={7}>
+                <Typography variant='h6' fontWeight="bold" gutterBottom>{name}</Typography>
+                <Typography variant='body1'>{description}</Typography>
+            </Grid>
+            <ValueColumnStyled item xs={3}>
+                <Typography variant='body1' fontWeight="bold">
+                    {formatCurrency(value)}
+                </Typography>
+            </ValueColumnStyled>
+            <ActionColumnStyled item xs={2}>
+                <IconButton>
+                    <PencilIcon onClick={() => console.log("Cliquei para editar!")} />
+                </IconButton>
+                <IconButton>
+                    <TrashIcon onClick={() => console.log("Cliquei para remover!")} />
+                </IconButton>
+            </ActionColumnStyled>
+        </TableLineStyled>
     )
 }
 

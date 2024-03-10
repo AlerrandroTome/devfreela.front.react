@@ -1,7 +1,7 @@
-import Home from './home';
+import Login from './login';
 import Project from './project';
 import User from './user';
 
-const routes = [...Home, ...Project, ...User];
+const routes = [...Login, ...Project, ...User];
 
 export default routes;

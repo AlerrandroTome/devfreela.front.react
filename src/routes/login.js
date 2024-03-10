@@ -1,14 +1,14 @@
 import { lazy } from 'react';
 import { ROUTE_PATH } from '../commons/constraints/routes-path';
 
-const Home = lazy(async () => await import('../pages/Home'));
+const Login = lazy(async () => await import('../pages/Login'));
 
-const home = [
+const login = [
     {
         path: ROUTE_PATH.home,
-        component: Home,
+        component: Login,
         exact: true
     }
 ];
 
-export default home;
+export default login;
