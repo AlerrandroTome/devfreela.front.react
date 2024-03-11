@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableItem from './TableItem';
 import { TableContainerStyled, ValueColumnStyled, ActionColumnStyled } from './styles';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, Stack } from '@mui/material';
 import { SANTAS_GRAY } from '../../commons/constraints/colors';
 
-function ProjectTable({projectData}){
+function ProjectTable({projectData, onDelete, onEdit}){
     return (
         <TableContainerStyled className="table-container">
             <Grid container>
@@ -19,8 +19,13 @@ function ProjectTable({projectData}){
                     <Typography color={SANTAS_GRAY} fontWeight="bold">Actions</Typography>
                 </ActionColumnStyled>
             </Grid>
-            {projectData?.map(({name, description, value}) => 
-                (<TableItem key={name} name={name} description={description} value={value}/>)
+            {projectData?.map(({id, title, description, totalCost}) => 
+                (<TableItem key={id} id={id} title={title} description={description} totalCost={totalCost} onDelete={onDelete} onEdit={onEdit} />)
+            )}
+            {projectData.length <= 0 && (
+                <Stack className="mt-3" alignItems="center" justifyContent="center">
+                    <Typography variant="h5">You don't have any projects yet.</Typography>
+                </Stack>
             )}
         </TableContainerStyled>
     )
@@ -29,11 +34,14 @@ function ProjectTable({projectData}){
 ProjectTable.propTypes = {
     projectData: PropTypes.arrayOf(
         PropTypes.shape({
-            name: PropTypes.string.isRequired,
+            id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
             description: PropTypes.string.isRequired,
-            value: PropTypes.number.isRequired
+            totalCost: PropTypes.string.isRequired
         })
-    ).isRequired
+    ).isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired
 }
 
 export default ProjectTable;

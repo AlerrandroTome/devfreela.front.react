@@ -5,7 +5,7 @@ import { Field } from 'formik';
 function Input(props) {
     return (
         <Field {...props}>
-            {({ field, meta }) => (
+            {({ field, meta, type }) => (
                 <div className="mb-2">
                     <TextField label={props.label} inputProps={{ ...field, ...props }} className="w-100" variant="standard"/>
                     {meta.touched && meta.error && (

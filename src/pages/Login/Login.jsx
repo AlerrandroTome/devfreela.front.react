@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../containers/Layout';
-import { ReactComponent as UserRegisterBG } from '../../assets/images/bg-register-user.svg';
+import { ReactComponent as UserRegisterBG } from '../../assets/images/bg-user.svg';
 import { Grid, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { ROUTE_PATH } from '../../commons/constraints/routes-path';
@@ -9,13 +9,30 @@ import Button from '../../components/Button';
 import { validateForm } from './schemas';
 import { INITIAL_VALUES } from './constants';
 import Input from '../../components/Form/Input';
+import UsersService from '../../services/users';
 
 function RegisterUser() {
     const navigate = useNavigate();
 
-    const onSubmit = () => {
-        navigate(ROUTE_PATH.project);
-    }
+    const onSubmit = (values) => 
+    {
+        UsersService.getUsers()
+        .then(({ data }) => {
+            let user = data.filter(user => user.email === values.email && user.password === values.password);
+            if(user.length > 0) 
+            {
+                user = user[0];
+                localStorage.setItem("userName", user.fullName);
+                localStorage.setItem("role", user.role === "dev" ? "Developer" : "Client");
+                localStorage.setItem("userId", user.id);
+                navigate(ROUTE_PATH.project);
+            }
+            else {
+                alert('Wrong email or password.');
+            }
+        })
+        .catch((error) => alert(error.message));
+    };
 
     return (
         <Layout image={UserRegisterBG}>

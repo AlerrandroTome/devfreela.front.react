@@ -6,34 +6,37 @@ import { ReactComponent as TrashIcon } from '../../assets/images/icon-trash.svg'
 import { TableLineStyled, ValueColumnStyled, ActionColumnStyled } from './styles';
 import { formatCurrency } from '../../commons/utils/money';
 
-function TableItem({name, description, value}){
+function TableItem({id, title, description, totalCost, onDelete, onEdit}){
     return (
         <TableLineStyled container>
             <Grid item xs={7}>
-                <Typography variant='h6' fontWeight="bold" gutterBottom>{name}</Typography>
+                <Typography variant='h6' fontWeight="bold" gutterBottom>{title}</Typography>
                 <Typography variant='body1'>{description}</Typography>
             </Grid>
             <ValueColumnStyled item xs={3}>
                 <Typography variant='body1' fontWeight="bold">
-                    {formatCurrency(value)}
+                    {formatCurrency(totalCost)}
                 </Typography>
             </ValueColumnStyled>
             <ActionColumnStyled item xs={2}>
                 <IconButton>
-                    <PencilIcon onClick={() => console.log("Cliquei para editar!")} />
+                    <PencilIcon onClick={() => onEdit(id)} />
                 </IconButton>
                 <IconButton>
-                    <TrashIcon onClick={() => console.log("Cliquei para remover!")} />
+                    <TrashIcon onClick={() => onDelete(id)} />
                 </IconButton>
             </ActionColumnStyled>
         </TableLineStyled>
     )
 }
 
-TableItem.protoTypes = {
-    name: PropTypes.string.isRequired,
+TableItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired
+    totalCost: PropTypes.string.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired
 }
 
 export default TableItem;

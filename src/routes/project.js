@@ -17,7 +17,7 @@ const project = [
         exact: true
     },
     {
-        path: `${ROUTE_PATH.project}/:idProject`,
+        path: `${ROUTE_PATH.project}/:projectId`,
         component: EditProject,
         exact: true
     }

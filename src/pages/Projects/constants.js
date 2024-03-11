@@ -1,5 +1,6 @@
-export const PROJECT_INITIAL_VALUES = {
+export const PROJECT_INITIAL_VALUES = 
+{
     title: "",
-    totalCost: undefined,
+    totalCost: "",
     description: ""
 }
